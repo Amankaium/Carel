@@ -23,7 +23,35 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Здесь пишем, что Карел должен делать.********************
-        clearAllDesk();
+        /*
+        while(true){
+            if (!isFrontClear()) {
+                returnHome();
+                break;
+            }
+            progressingRow();
+            turnRight();
+            if(!isFrontClear()){
+                returnHome();
+                break;
+            }
+            copyCell();
+            dropBeeper();
+            turnRight();
+
+
+
+        }
+        */
+        while (true) {
+            replaceRow();
+            turnRight();
+            if (!isFrontClear()) {
+                returnHome();
+                break;
+            }
+            goToNextPosition();
+        }
 
 
 
@@ -37,24 +65,35 @@ public class MainActivity extends AppCompatActivity {
 
     }//Здесь пишем новые методы.***********************************
 
-
-
-
-
-
-
-
-    private void clearAllDesk() {
-        while (true) {
-            clearRow();
-            turnRight();
-            if (!isFrontClear()) {
-                returnHome();
-                break;
+    private void replaceRow() {
+        while (true){
+            if (!isFrontClear()) break;
+            if (isBeeper()) {
+                replaceCell();
             }
-            goToNextPosition();
+            if (!isFrontClear()) break;
+            move();
+
         }
     }
+
+    private void replaceCell() {
+        while (isBeeper()) {
+            collectBeeper();
+            move();
+            dropBeeper();
+            uTurn();
+            move();
+            uTurn();
+        }
+        move();
+    }
+
+
+    //удалить снизу
+
+
+
 
     private void returnHome() {
         turnRight();
@@ -86,18 +125,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void clearRow() {
-        while(true){
-            clearCell();
-            if (isFrontClear()) move();
-            else break;
 
-        }
-    }
 
-    private void clearCell() {
-        while (isBeeper()) collectBeeper();
-    }
+
 
 
     //Дальше ничего не меняем.*************************************
