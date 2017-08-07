@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             collectBeeper();
             move();
             dropBeeper();
+            dropBeeper();
             uTurn();
             move();
             uTurn();
