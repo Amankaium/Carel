@@ -43,17 +43,13 @@ public class MainActivity extends AppCompatActivity {
 
         }
         */
-        dropBeeper();
-        moveToWall();
-        dropBeeper();
-        uTurn();
-        while(true) {
-            replaceNextpoint();
-            if (isBeeperNextPoint()){
-                collectBeeper();
-                break;
-            }
+        dropBeeperProgressiveRow();
+        turnRight();
+        if (isFrontClear()){
+            copyBeeperRow();
+            collectBeeperRow();
         }
+        replaceBeeperToMain();
 
 
 
@@ -66,6 +62,75 @@ public class MainActivity extends AppCompatActivity {
 
 
     }//Здесь пишем новые методы.***********************************
+
+    private void replaceBeeperToMain() {
+        turnRight();
+        moveToWall();
+        while(isBeeper())collectBeeper();
+        uTurn();
+        moveToWall();
+        uTurn();
+        while (isBeeper()) {
+            collectBeeper();
+            moveToWall();
+            dropBeeper();
+            uTurn();
+            moveToWall();
+            uTurn();
+        }
+    }
+
+    private void collectBeeperRow() {
+        move();
+        while (isBeeper()) {
+            collectBeeper();
+            uTurn();
+            move();
+            dropBeeper();
+            dropBeeper();
+            uTurn();
+            move();
+            uTurn();
+        }
+        while(isFrontClear()){
+            while(isBeeperNextPoint()){
+                move();
+                collectBeeper();
+                uTurn();
+                moveToWall();
+                uTurn();
+                dropBeeper();
+            }
+            move();
+        }
+
+    }
+
+
+    private void copyBeeperRow() {
+        while(isBeeper()) {
+            collectBeeper();
+            while (isFrontClear()) {
+                move();
+                dropBeeper();
+
+            }
+            uTurn();
+            moveToWall();
+            uTurn();
+        }
+
+    }
+
+    private void dropBeeperProgressiveRow() {
+        for (int i = 0; true; i++){
+            for (int j=0; j<=i; j++){
+                dropBeeper();
+            }
+            if (!isFrontClear()) break;
+            move();
+        }
+    }
 
     private boolean isBeeperNextPoint() {
         move();
