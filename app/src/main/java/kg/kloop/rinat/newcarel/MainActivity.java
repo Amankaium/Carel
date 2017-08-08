@@ -43,14 +43,16 @@ public class MainActivity extends AppCompatActivity {
 
         }
         */
-        while (true) {
-            replaceRow();
-            turnRight();
-            if (!isFrontClear()) {
-                returnHome();
+        dropBeeper();
+        moveToWall();
+        dropBeeper();
+        uTurn();
+        while(true) {
+            replaceNextpoint();
+            if (isBeeperNextPoint()){
+                collectBeeper();
                 break;
             }
-            goToNextPosition();
         }
 
 
@@ -64,6 +66,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     }//Здесь пишем новые методы.***********************************
+
+    private boolean isBeeperNextPoint() {
+        move();
+        if(isBeeper()) return true;
+        else return false;
+    }
+
+    private void replaceNextpoint() {
+        moveToWall();
+        uTurn();
+        while(!isBeeper()){
+            move();
+        }
+        collectBeeper();
+        move();
+        dropBeeper();
+    }
 
     private void replaceRow() {
         while (true){
